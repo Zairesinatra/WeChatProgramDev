@@ -1,0 +1,27 @@
+<!-- pages/home/home.wxml
+<view><text>这是自己的Home首页</text></view>
+<view><text selectable="true">这是自己的Home首页</text></view>
+<view><text space="ensp">1    1</text></view>
+<view><text space="emsp">2    2</text></view>
+<view><text space="nbsp">3    3</text></view>
+<view><text space="nbsp" style="font-size:40px;">4    4</text></view>
+<view><text decode>&nbsp;&lt;&gt;&amp;&apos;&ensp;&emsp</text></view>
+<button>默认的</button> -->
+<!-- 默认按钮独占一行,设置以后变为行内 -->
+<!-- <button size='mini' type="warn">默认的</button><button size='mini' type="primary">默认的</button>
+<button size='mini' type="primary" plain>默认的</button><button size='mini' type="warn" disabled>默认的</button><button size='mini' type="primary" loading>默认的</button> -->
+<!-- <input type="text" value="zairsinatra" password></input>
+<input type="text" placeholder="请输入内容"></input>
+<input type="text" placeholder="因为禁用你输入不了" disabled></input>
+<input type="idcard" maxlength="-1"></input> -->
+<!-- <image src="/asset/海贼王.jpg" mode="aspectfill"></image>
+<image src="https://upload.wikimedia.org/wikipedia/zh/e/e0/Kizaru_Borsalino.png" mode="aspectFit"></image> -->
+<!-- <view id="v1">666666</view>
+<view id="v2">666666</view>
+<view>666666</view>
+<view data-color="pink">666666</view>
+<view>666666</view>-->
+
+<!-- 使用rpx绘制占屏幕宽度一半的盒子 -->
+<view class="zs">666666</view>
+<view><input type="text"></input><input type="text"></input></view>

@@ -1,0 +1,35 @@
+/* pages/home/home.wxss */
+
+/* 文本变白->生效了 */
+@import  '../../asset/css/common.wxss';
+
+view{
+  font-size: 12px;
+}
+#v1{
+  background-color: red;
+}
+#v2{
+  background-color: #666666;
+}
+/* 伪类标签 */
+#v2:before{
+    content: '===';
+}
+view:nth-of-type(3){
+  background-color: blueviolet;
+}
+/* 属性选择器与css不同-需要data-开头 */
+[data-color="pink"]{
+  background-color: greenyellow;
+}
+
+.zs{
+  width: 375rpx;
+  height: 375rpx;
+  background-color: pink;
+}
+
+input{
+  border-color: greenyellow;
+}
