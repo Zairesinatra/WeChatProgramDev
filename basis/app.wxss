@@ -10,7 +10,7 @@
 } 
 
 /* 根据权重判断是否覆盖 */
-view>input{
+/* view>input{
   border: 1rpx solid #cccccc;
   margin: 10px;
 }

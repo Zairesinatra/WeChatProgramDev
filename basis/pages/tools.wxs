@@ -1,0 +1,9 @@
+var foo = 'hello world from tools.wxs'
+var bar = function(zs){
+  return zs
+}
+module.exports = {
+  FOO:foo,
+  bar:bar
+}
+module.exports.msg = 'some message'

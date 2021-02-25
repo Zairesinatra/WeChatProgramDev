@@ -1,0 +1,24 @@
+<!--pages/tabhome/tabhome.wxml-->
+<text>pages/tabhome/tabhome.wxml</text>
+<!--  绑定数据 -->
+<view>{{info}}</view>
+<!-- 绑定属性 -->
+<view id="item-{{id}}"></view>
+<!-- 运算-三元 -->
+<view>{{flag?'条件为真':'条件为假'}}</view>
+<button bindtap="btnTapHander">click me!</button>
+<input bindinput="iptHandler"></input>
+<input bindinput='iptHandler' value='{{info}}'></input>
+<button type="primary" bindtap="halo" data-messs="zairesinatra" data-okokok="okokok">按钮</button>
+<view>{{foo.msg}}</view>
+<!-- 内嵌wxs -->
+<wxs module="foo">
+  var some_msg = 'Hello world'
+  module.exports = {
+    msg:some_msg
+  }
+</wxs>
+<!-- 外联wxs -->
+<wxs src="./../tools.wxs" module="tools"></wxs>
+<view>{{tools.msg}}</view>
+<view>{{tools.bar(tools.FOO)}}</view>
