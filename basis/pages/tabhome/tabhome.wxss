@@ -1,0 +1,6 @@
+/* pages/tabhome/tabhome.wxss */
+input{
+  border:1rpx solid #eee;
+  padding: 5rpx;
+  margin: 5rpx;
+}

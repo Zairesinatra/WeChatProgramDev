@@ -24,4 +24,5 @@
 
 <!-- 使用rpx绘制占屏幕宽度一半的盒子 -->
 <view class="zs">666666</view>
-<view><input type="text"></input><input type="text"></input></view>
+<view><input type="text" placeholder="请母亲大人路上小心"></input><input type="text"></input></view>
+<input type="text" placeholder="请母亲大人路上小心"></input>
