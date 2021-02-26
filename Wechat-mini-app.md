@@ -261,7 +261,9 @@ module.exports.msg = 'some message'
 
 #### 页面渲染
 
-条件渲染：小程序中使用`wx:if="{{condition}}"`来判断是否需要渲染该代码，同时也可使用`wx:elif`和`wx:else`来添加一个`else`块。
+条件渲染：
+
+1.小程序中使用`wx:if="{{condition}}"`来判断是否需要渲染该代码，同时也可使用`wx:elif`和`wx:else`来添加一个`else`块。
 
 ```js
 <view wx:if="{{condition}}">True</view>
@@ -270,4 +272,102 @@ module.exports.msg = 'some message'
 <view wx:elif="{{length>3}}">333</view>
 <view wx:else>emememe</view>
 ```
+
+2.`block wx:if`可一次性判断多个组件标签，通过`<block></block>`标签将多个组件包装起来，并上边使用`wx:if`控制属性
+
+```js
+<block wx:if="{{true}}"><view>view1</view><view>view2</view></block>	
+// view1 view2都会显示	block为包装元素，不会在页面中做任何渲染
+```
+
+3.`hidden`也可以控制小程序的显示与隐藏
+
+```js
+hidden="{{condition}}"
+//example
+<view hidden="{{true}}">略略略</view>
+```
+
+4.`wx:i`f与`hidden`区别
+
+​	·被`wx:if`控制的区域会进行局部渲染，动态创建或销毁
+
+​	·同时`wx:if`是惰性的，在条件第一次为真才会开始局部渲染
+
+​	·相比之下`hidden`简单，组件始终渲染，知识简单控制显示与隐藏
+
+​	·`wx:if`会有更多的切换消耗，`hidden`会有更多的初始渲染消耗
+
+列表渲染：
+
+1.`wx:for`	组件上使用`wx:for`控制属性绑定一个数组，即可使数组中各项的数据重复渲染该组件。默认当前数组当前项下标变量名为`index`，数组当前变量名为`item`。
+
+```js
+<view wx:key="index" wx:for="{{array}}">索引是{{index}} 当前项是{{item}} </view>
+```
+
+2.手动指定索引和当前项的变量名
+
+```js
+wx:for-item指定当前数组元素变量名	wx:for-index指定数组当前下标的变量名
+<view wx:for="{{array}}" wx:for-index="idx" wx:for-item="itemName">索引是{{idx}} 当前项是{{itemName}}</view>
+```
+
+3.列表渲染中的`key`
+
+```key```在列表循环中的作用即如果**列表中项目的位置会动态改变**或者**有新的项目添加到列表中**，且**希望列表中的项目保持字节的特征和状态**，需要使用```wx:key```来指定列表中项目的唯一的标识符。当数据改变触发渲染层重新渲染时，会矫正带有key的组件，框架会确保他们被重新排序而不是重新创建，以确保是组件保持自身的状态，提升渲染的效率与性能并避免数据混乱的情况出现。
+
+key不绑定index,因为每次渲染索引值重新排号。
+
+`key`值具有唯一性且不能动态改变、`key`值必须是数字或字符串、保留关键字`*this`代表在`for`循环中`item`本身，也可充当`key`值，但需要`item`本身是有一个唯一的字符串或者数字、如果不提供`wx:key`会在终端报一个`warning`，若明确知道列表是静态的，或者不关注其顺序则可以选择忽略。
+
+页面事件：
+
+1.下拉刷新	用户手指在屏幕上自上而下滑动，从而移动端更新列表数据的交互行为。相比定时以及按钮刷新有更好的用户体验。
+
+2.启动下拉刷新：·需要在```app.json```的```window```选项中或页面配置开启```enablePullDownRefresh```。一般情况推荐在页面配置中为需要的页面单独开启下拉刷新。·或调用顶级对象的函数```wx.startPullDownRefresh()```触发下拉刷新
+
+3.配置下拉刷新窗口的样式：在app.json文件的window选项中修改```backgroundColor```或```backgroundTextStyle```选项
+
+4.监听下拉刷新事件：给页面添加```onPullDownRefresh()```函数即可监听在当前页面下拉刷新操作
+
+5.停止下拉刷新效果：下拉刷新效果不会主动消失，应手动调用```wx.stopPullDownRefresh()```
+
+6.上拉加载更多的概念及应用场景：本质是数据的分页加载
+
+7.配置上拉触底的距离：在```app.json```的```window```选项中或页面配置中设置触底距离```onReachBottomDistance```。单位是```px```默认触底距离为```50px```。而当上拉超过不足```50px```时会触发```onReachBottom()```函数。监听用户当前页面上拉触底事件，实现上拉加载更多列表的效果。
+
+<img src="/Users/xieziyi/Library/Application Support/typora-user-images/截屏2021-02-26 16.39.54.png" alt="截屏2021-02-26 16.39.54" style="zoom:50%;" />
+
+其他页面事件：
+
+1.```onPageScroll(Object)```监听滑动页面事件，其中的```Object```参数说明如下
+
+| 属性            | 类型   | 说明                       |
+| --------------- | ------ | -------------------------- |
+| ```scrollTop``` | Number | 页面在垂直方向已滚动的距离 |
+
+2.```onShareAppMessage(Object)```监听用户点击页面内转发按钮```<button>组件:open-type="share"```或与上角菜单"转发"按钮行为，并自定义转发内容。其中```Object```参数说明如下。
+
+| 参数             | 类型         | 说明                                                         |
+| ---------------- | ------------ | ------------------------------------------------------------ |
+| ```from```       | ```String``` | 转发事件来源，button来自页面内转发按钮，menu来自右上角转发菜单 |
+| ```target```     | ```Object``` | 若from值为button，则```target```触发这次转发事件的```button```，否则为```undefined``` |
+| ```webViewUrl``` | ```String``` | 页面包含<web-view>组件时，返回当前<web-view>的```url```      |
+
+转发期间自定义转发的内容-```onShareAppMessage(Object)```retuen一个自定义转发内容。
+
+| 字段           | 说明           | 默认值         |
+| -------------- | -------------- | -------------- |
+| ```title```    | 转发标题       | 当前小程序名称 |
+| ```path```     | 转发路径       | 当前页面path   |
+| ```imageUrl``` | 自定义图片路径 | 使用默认截图   |
+
+3.```onTabItemTap(Object)```-底部Tab栏触发
+
+| 参数           | 默认值       | 说明                       |
+| -------------- | ------------ | -------------------------- |
+| ```index```    | ```String``` | 被点击tabItem序号，从0开始 |
+| ```pagePath``` | ```String``` | 被点击tabItem页面路径      |
+| ```text```     | ```String``` | 被点击tabItem的按钮文字    |
 

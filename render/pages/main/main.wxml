@@ -1,0 +1,47 @@
+<!--pages/main/main.wxml-->
+<view wx:if="{{length>6}}">zaire</view>
+<view wx:elif="{{length>3}}">sinatra</view>
+<view wx:else>666</view>
+
+<!-- 使用block判断多个组件 -->
+<block wx:if="{{zs>100}}">
+<view >zairesinatra</view>
+</block>
+
+<!-- hidden="{{}}" -->
+<view hidden="{{flag}}">略略略</view>
+
+<!-- 比较wx:if与hidden -->
+<view wx:if="{{flag}}">被wx:if控制的区域</view>
+<view hidden="{{!flag}}">被hidden控制的区域</view>
+<button type="primary" bindtap="btnTap">Toggle</button>
+
+<!-- wx:for -->
+<view wx:key="index" wx:for="{{list}}">索引是:{{index}},当前项是:{{item}}</view>
+
+<!-- 自定义索引和当前项 -->
+<!-- <view wx:for="{{list}}" wx:key="index" wx:for-index="idx" wx:for-item="itName">索引是{{idx}} 当前项是{{itName}}</view> -->
+
+<!-- wx:key -->
+<view>
+  <input value="{{name}}" bindinput="iptHandler"></input>
+  <button type="primary" bindtap="add">添加</button></view>
+<view wx:for="{{arr}}" wx:key="id"><checkbox></checkbox>id:{{item.id}}  name:{{item.name}}</view>
+
+
+<!-- <view wx:for="{{list}}" wx:key="*this">{{list}}</view>
+<view>------------------</view>
+<view wx:for="{{hahaha}}" wx:key="id"></view> -->
+
+<view>------------------</view>
+
+<!-- 通过按钮触发下拉刷新 -->
+<button type="primary" bindtap="btnHandler2">按钮触发下拉刷新</button>
+<view wx:for="{{whoami}}" wx:key="item">{{whoami}}</view>
+
+<view>------------------</view>
+<button type="primary" open-type="share" data-info="aaa">转发</button>
+
+<!-- 上拉触底小案例 -->
+<view>------------------</view>
+<view wx:for="{{msglist}}" wx:key="*this" class="box">{{item}}</view>

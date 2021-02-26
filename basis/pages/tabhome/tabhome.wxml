@@ -1,5 +1,4 @@
 <!--pages/tabhome/tabhome.wxml-->
-<text>pages/tabhome/tabhome.wxml</text>
 <!--  绑定数据 -->
 <view>{{info}}</view>
 <!-- 绑定属性 -->

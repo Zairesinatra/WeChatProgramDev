@@ -1,0 +1,11 @@
+<view class="container zs">
+<!--有wx:key-->
+<input value="{{name}}" placeholder="说出你的name" bindinput="iptHandler"></input>
+<button bindtap="Insert" type="primary">
+    Insert
+</button>
+<!-- <button bindtap="Random" type="primary">
+    Random
+</button> -->
+<input value="{{item.name}}" wx:for="{{list}}" wx:key="id">{{item.name}}</input>
+</view>
