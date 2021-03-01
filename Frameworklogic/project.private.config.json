@@ -1,0 +1,23 @@
+{
+  "condition": {
+    "plugin": {
+      "list": []
+    },
+    "game": {
+      "list": []
+    },
+    "gamePlugin": {
+      "list": []
+    },
+    "miniprogram": {
+      "list": [
+        {
+          "name": "调试info页面开发",
+          "pathName": "pages/info/info",
+          "query": "name=zs&age=23",
+          "scene": null
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,7 @@
+<!--pages/home/home.wxml-->
+<text>pages/home/home.wxml</text>
+<!-- 此处页面路径应该以/开头 -->
+<navigator url="/pages/info/info?name=zs&age=23">导航到Info页面</navigator>
+<button type="primary" bindtap="btnHandler1">通过编程导航跳转到info</button>
+<button bindtap="getInfo">发起get请求</button>
+<button bindtap="postInfo">发起post请求</button>
