@@ -1,0 +1,2 @@
+<!--components/test/test.wxml-->
+<text>这是自定义的test组件</text>

@@ -1,4 +1,5 @@
 {
+  "setting": {},
   "condition": {
     "plugin": {
       "list": []
@@ -12,9 +13,9 @@
     "miniprogram": {
       "list": [
         {
-          "name": "调试info页面开发",
-          "pathName": "pages/info/info",
-          "query": "name=zs&age=23",
+          "name": "学习组件化开发",
+          "pathName": "pages/message/message",
+          "query": "",
           "scene": null
         }
       ]
