@@ -1,2 +1,17 @@
 <!--components/test/test.wxml-->
-<text>这是自定义的test组件</text>
+<text class="red-color">这是自定义的test组件</text>
+<view>------------------</view>
+<view>当前组件data中的值为:{{name}}</view>
+<button type="primary" size="mini" bindtap="btnHandler">修改zs</button>
+<view>------------------</view>
+<view>外界传递过来的propCount的值:{{propCount}}</view>
+<button type="primary" style="width:100vw" bindtap="changePropCountVal">修改propCount的值</button>
+<view>--------以下是匿名插槽----------</view>
+<!-- 匿名插槽 -->
+<slot></slot>
+<!-- 方便看见插槽在哪个中 -->
+<view>---------以下是具名插槽before---------</view>
+<!-- 具名插槽 -->
+<slot name="before"></slot>
+<view>---------以下是具名插槽after---------</view>
+<slot name="after"></slot>
