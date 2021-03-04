@@ -5,9 +5,26 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    count:6
+  },
+  // msg页面值改变也会自动传递到组件中
+  changeCountval:function(){
+    this.setData({
+      count:this.data.count + 1
+    })
+    // 组件之间通讯-返回组件实例
+    var component = this.selectComponent('.customA')
+    console.log(component)
+    console.log(component.data.name);
   },
 
+  getSonCount:function(fakee){
+    console.log('ok');
+    console.log(fakee.detail);
+    this.setData({
+      count:fakee.detail.count
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
