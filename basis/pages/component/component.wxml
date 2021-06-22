@@ -1,0 +1,44 @@
+<!-- div 同样可用不会报错 -->
+<div>
+<!-- 基础库版本低于 2.1.0 时, text 组件内嵌的 text style 设置可能不会生效 -->
+  <text user-select="true" space="nbsp" style="color:red;font-size:30px;">
+      c o m p o n e n t
+  </text>
+</div>
+<!-- div 中用 style 不居中,而 view 中用 style 居中 -->
+<view style="text-align:center;">c o m p o n e n t</view>
+<div style="text-align:center;">c o m p o n e n t</div>
+<!-- view 组件 -->
+<!-- text 组件及其属性 -->
+<view>--------------------------------------</view>
+<view>
+  <text decode>&nbsp; &nbsp不要忘记; => 据字体调整的空格</text>
+</view>
+<view>
+  <text decode>&ensp; &ensp不要忘记; => 据英文调整的空格</text>
+</view>
+<view>
+  <text decode>&emsp; &emsp不要忘记; => 据中文调整的空格</text>
+</view>
+<view>--------------------------------------</view>
+<!-- view 属性 -->
+<view style="width:200px;height:200px" hover-class="dadclickby" hover-stay-time="500" hover-start-time="1000">
+  <view hover-class="clickby" style="width:150px;height:150px">
+    不设置 hover-stop-propagation 导致父元素被影响.点我试试
+  </view>
+</view>
+<view style="width:200px;height:200px" hover-class="dadclickby" hover-stay-time="1000">
+  <view hover-class="clickby" style="width:150px;height:150px" hover-stop-propagation>
+    设置 hover-stop-propagation 则父元素不被影响.点我试试
+  </view>
+</view>
+<button size="mini" type="warn">mini按钮</button>
+<button size="default" type="primary" plain>plain按钮</button>
+<button type="primary">默认按钮占一行</button>
+<button disabled loading>被禁用的loadingbutton</button>
+<!-- image 不是 img -->
+<!-- image默认宽度300px,高度255px -->
+<image src="/asset/海贼王.jpg"></image>
+<!-- 有默宽高的 -->
+<image></image>
+<image src="https://images.pexels.com/photos/572897/pexels-photo-572897.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"></image>

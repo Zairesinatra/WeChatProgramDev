@@ -13,17 +13,19 @@ view{
   background-color: #666666;
 }
 /* 伪类标签 */
-#v2:before{
+#v2::before{
     content: '===';
 }
 view:nth-of-type(3){
   background-color: blueviolet;
 }
 /* 属性选择器与css不同-需要data-开头 */
+[data-color="blue"] {
+  background-color: #06B4FE;
+}
 [data-color="pink"]{
   background-color: greenyellow;
 }
-
 .zs{
   width: 375rpx;
   height: 375rpx;
