@@ -14,15 +14,16 @@
 <input type="text" placeholder="请输入内容"></input>
 <input type="text" placeholder="因为禁用你输入不了" disabled></input>
 <input type="idcard" maxlength="-1"></input> -->
-<!-- <image src="/asset/海贼王.jpg" mode="aspectfill"></image>
-<image src="https://upload.wikimedia.org/wikipedia/zh/e/e0/Kizaru_Borsalino.png" mode="aspectFit"></image> -->
-<!-- <view id="v1">666666</view>
+
+<view id="v1">666666</view>
 <view id="v2">666666</view>
 <view>666666</view>
+<!-- 所有自定义属性必须以 data- 开头 -->
+<view data-color="blue">zairesinatra</view>
 <view data-color="pink">666666</view>
-<view>666666</view>-->
+<view>666666</view>
 
 <!-- 使用rpx绘制占屏幕宽度一半的盒子 -->
 <view class="zs">666666</view>
-<view><input type="text" placeholder="请母亲大人路上小心"></input><input type="text"></input></view>
-<input type="text" placeholder="请母亲大人路上小心"></input>
+<view><input type="text" placeholder="节日快乐"></input><input type="text"></input></view>
+<input type="text" placeholder="节日快乐"></input>

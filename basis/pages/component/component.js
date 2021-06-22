@@ -1,15 +1,11 @@
-// pages/main/main.js
+// pages/component/component.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    list: [
-      {id: 0, name: 'zs'},
-      {id: 1, name: 'zy'},
-      {id: 2, name: 'zszy'},
-    ]
+
   },
 
   /**

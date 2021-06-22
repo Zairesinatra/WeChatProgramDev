@@ -1,10 +1,11 @@
 {
   "pages": [
+    "pages/main/main",
+    "pages/home/home",
+    "pages/component/component",
     "pages/tabhome/tabhome",
     "pages/tabmsg/tabmsg",
     "pages/tabcontact/tabcontact",
-    "pages/main/main",
-    "pages/home/home",
     "pages/index/index",
     "pages/logs/logs"
   ],
