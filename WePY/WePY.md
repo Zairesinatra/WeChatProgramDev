@@ -5,7 +5,6 @@
 ## 安装WePY框架
 
 ```zsh
-npm install wepy-cli -g
 npm install -g wepy-cli@1.7.3
 ```
 
