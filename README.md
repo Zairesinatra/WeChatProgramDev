@@ -615,9 +615,9 @@ key不绑定index,因为每次渲染索引值重新排号。
 
 1.下拉刷新	用户手指在屏幕上自上而下滑动，从而移动端更新列表数据的交互行为。相比定时以及按钮刷新有更好的用户体验。
 
-2.启动下拉刷新：·需要在```app.json```的```window```选项中或页面配置开启```enablePullDownRefresh```。一般情况推荐在页面配置中为需要的页面单独开启下拉刷新。·或调用顶级对象的函数```wx.startPullDownRefresh()```触发下拉刷新
+2.启动下拉刷新：需要在```app.json```的```window```选项中或页面配置开启```enablePullDownRefresh```。一般情况推荐在页面配置中为需要的页面单独开启下拉刷新。或调用顶级对象的函数```wx.startPullDownRefresh()```触发下拉刷新。
 
-3.配置下拉刷新窗口的样式：在app.json文件的window选项中修改```backgroundColor```或```backgroundTextStyle```选项
+3.配置下拉刷新窗口的样式：在 app.json 文件的 window 选项中修改```backgroundColor```或```backgroundTextStyle```选项
 
 4.监听下拉刷新事件：给页面添加```onPullDownRefresh()```函数即可监听在当前页面下拉刷新操作
 
@@ -633,9 +633,9 @@ key不绑定index,因为每次渲染索引值重新排号。
 
 1.```onPageScroll(Object)```监听滑动页面事件，其中的```Object```参数说明如下
 
-| 属性            | 类型   | 说明                       |
-| --------------- | ------ | -------------------------- |
-| ```scrollTop``` | Number | 页面在垂直方向已滚动的距离 |
+| 属性            | 类型   | 说明                                 |
+| --------------- | ------ | ------------------------------------ |
+| ```scrollTop``` | Number | 页面在垂直方向已滚动的距离（单位px） |
 
 2.```onShareAppMessage(Object)```监听用户点击页面内转发按钮```<button>组件:open-type="share"```或与上角菜单"转发"按钮行为，并自定义转发内容。其中```Object```参数说明如下。
 
@@ -645,7 +645,7 @@ key不绑定index,因为每次渲染索引值重新排号。
 | ```target```     | ```Object``` | 若from值为button，则```target```触发这次转发事件的```button```，否则为```undefined``` |
 | ```webViewUrl``` | ```String``` | 页面包含<web-view>组件时，返回当前<web-view>的```url```      |
 
-转发期间自定义转发的内容-```onShareAppMessage(Object)```retuen一个自定义转发内容。
+转发期间自定义转发的内容-```onShareAppMessage(Object)```return一个自定义转发内容。
 
 | 字段           | 说明           | 默认值         |
 | -------------- | -------------- | -------------- |
@@ -661,3 +661,453 @@ key不绑定index,因为每次渲染索引值重新排号。
 | ```pagePath``` | ```String``` | 被点击tabItem页面路径      |
 | ```text```     | ```String``` | 被点击tabItem的按钮文字    |
 
+## Framework and logic
+
+#### 页面导航：
+
+**页面之间的跳转**（页面导航）：
+
+- 声明式导航：通过navigator组件或标签（相当于网页中的`<a>`链接）实现页面跳转
+
+- 编程式导航：通过调用小程序API接口实现跳转
+
+**声明式导航：**
+
+```js
+1.导航到非tabBar页面（没有被当做tabBar进行切换的页面）
+<navigator url="/pages/info/info">去info页面</navigator>
+//	url必须以斜线开头
+```
+
+```js
+2.导航到tabBar页面（被当做tabBar进行切换的页面，如果单纯使用navigator组件的url属性无法完成导航，需结合open-type属性）
+<navigator url="/pages/home/home" open-type="switchTab">导航到home页面</navigator>
+```
+
+```js
+3.声明式导航后退（后退上一页面或多级页面，需要把open-type设置为navigateBack，同时使delta属性指定后退的层数）
+<navigator open-type="navigateBack" delta="1">返回上一级</navigator>
+//不需要url属性了
+```
+
+**编程式导航：**
+
+```js
+1.跳转到非tabBar页面
+btnHandler1:function(){
+    wx.navigateTo({
+      url: '/pages/info/info',
+    })
+通过wx.navigateTo(Object object)方法可以跳转到应用某个页面。但不能跳转到tabBar页面，其中Object参数对象属性列表如下
+```
+
+| 属性       | 类型       | 必选项 |                             说明                             |
+| ---------- | ---------- | ------ | :----------------------------------------------------------: |
+| `url`      | `string`   | 是     | 跳转应用内非tabBar的页面路径，路径后可带参数。参数与路径之间使用 ? 分隔，参数健与参数值用=相连，不同参数用&分隔 |
+| `success`  | `function` | 否     |                    接口调用成功的回调函数                    |
+| `fail`     | `dunction` | 否     |                    接口调用失败的回调函数                    |
+| `cpmplete` | `function` | 否     |            接口调用结束的回调函数（不论成功与否）            |
+
+```js
+2.通过编程式导航跳转到tabBar页面-注意这里的路径必须是以斜线开头
+btnHandler2:function(){
+    wx.switchTab({
+      url: '/pages/home/home',
+    })
+  }
+通过wx.switchTab(Object object)，可以跳转到tabBar页面，并关闭其他所有非tabBar页面，其中Object参数对象属性如上
+```
+
+```js
+3.通过编程式导航后退
+<button type="primary" bindtap="btnHandler3">通过编程式导航后退</button>
+btnHandler3:function(){
+    wx.navigateBack({
+      delta: 1,
+    })
+  }
+通过wx.navigateBack(Object object)方法，关闭当前页面，返回上一级或多级页面，其中Object参数对象的属性如下
+```
+
+| 属性       | 类型       | 必选项 | 说明                                            |
+| ---------- | ---------- | ------ | ----------------------------------------------- |
+| `delta`    | `number`   | Y      | 返回页面数，若`delta`大于现有的页面数则返回首页 |
+| `success`  | `function` | N      | 接口调用成功的回调函数                          |
+| `fail`     | `function` | N      | 接口调用失败的回调函数                          |
+| `complete` | `function` | N      | 接口调用完成的回调函数                          |
+
+导航传参：
+
+```js
+声明式导航传参
+navigator组件的url属性用来指定导航的页面路径，同时路径后面还可以携带参数，参数与路径之间使用？分隔，参数健与参数值用=相连，不同参数用&分隔
+<navigator url="/pages/logs/logs?name=zs&age=23">去log页面</navigator>
+```
+
+```js
+编程式导航
+wx.navigateTo(Object object)方法的object参数中，url属性来制定需要跳转的应用非tabBar的页面的路径。同时路径后面还可以携带参数，参数与路径之间使用？分隔，参数健与参数值用=相连，不同参数用&分隔
+wx.navigateTo({url:"/pages/logs/logs?name=zs&age=23"})
+```
+
+```js
+页面接收导航传递过来的参数
+不论声明式导航还是编程式导航，最终导航到的页面可以在onload生命周期函数中接收传递过来的参数
+//生命周期函数-监听页面加载
+onload:function(options){console.log(options)//options就是导航传递过来的参数}
+```
+
+自定义编译模式快速传参：
+小程序每次需改代码会默认首页进入，开发阶段针对特定页面开发，为方便小程序编译直接进入对应页面可适配自定义编译模式
+工具栏的“普通编译”-下拉菜单“添加编译模式”-弹出自定义编译条件窗口设置
+
+在小程序中可以实现导航后退的方式的是（B）
+
+```
+A、<navigator url="/page/info/info" open-type="switchTab">返回上一页</navigator>
+
+B、<navigator open-type="switchTab" delta="1">返回上一页</navigator>
+
+C、<navigator open-type="navigateBack" delta="1">返回上一页</navigator>
+
+D、<navigator open-type="navigatego" delta="1">返回上一页</navigator>
+```
+
+在小程序中用于监听页面滑动的事件是（C）
+
+```js
+A、onLoad()	B、onFullpageDown()	C、onPageScoll()	D、onUnLoad()
+```
+
+在小程序中可以实现导航到非tabBar页面的方式的是（A）
+
+```
+A、<navigator url="/page/info/info">去info页面</navigator>
+
+B、<navigator to="/page/info/info">去info页面</navigator>
+
+C、<navigator link-to="/page/info/info">去info页面</navigator>
+
+D、<navigator URL="/page/info/info">去info页面</navigator>
+```
+
+#### 网络数据请求：
+
+配置服务器域名-每个小程序需要事先设置一个服务器域名，小程序只可以与指定的域名进行网络通讯
+
+##### 服务器域名配置：小程序后台-开发-开发设置-服务器域名
+
+**注意**：
+
+- 域名只支持`https(request、uploadFile、downloadFile)`与`wss(connectSocket)`两种协议
+- 域名不能使用`IP地址`与`localhost`
+- 域名必须经过ICP备案
+- 域名服务器一个月内可申请5次修改
+- 一般配置request请求即可
+
+<u>跳过域名检验</u>：微信开发者工具中开启【开发环境不检验请求域名，TLS以及HTTPS证书】若服务器域名配置完成则勿忘关闭此功能。
+
+##### 网络数据请求：
+
+- **发起`get`请求：**调用 `wx.request(Object object)` 方法发起`get`请求
+
+```js
+wx.request({//请求url地址必须基于HTTPS协议
+	url:'https://www.zsfdp.top:8082/api/get',
+  data:{name:'zs',age:23}//发送到服务器的数据
+  sucess:function(request){console.log(request)}//成功之后的回调函数
+})
+```
+
+- **发起`post`请求：**调用`wx.request(Object object)`方法发起`post`请求
+
+```js
+wx.request({//请求url地址必须基于HTTPS协议
+	url:'https://www.zsfdp.top:8082/api/post',
+  method:'POST',
+  data:{name:'zs',age:23}//发送到服务器的数据
+  sucess:function(request){console.log(request)}//成功之后的回调函数
+})
+```
+
+- **小程序中没有跨域的限制：**
+
+网页中有浏览器同源策略，存在数据跨域请求从而衍生出了JSONP和CORS。而小程序的运行代码并不在浏览器所以不存在。
+
+在小程序中如何发起get请求（A）
+
+ A、调用 `wx.request()`	B、调用 `wx.get()`	C、调用 `wx.$get()`	D、调用 `wx.requestget()`
+
+在小程序中是否存在跨域问题（B）
+
+A、不确定	B、不存在	C、存在	D、以上都不对
+
+在小程序中关于配置服务器域名一个月可以修改几次（B）
+
+A、1次	B、5次	C、10次	D、无数次
+
+#### 自定义组件
+
+##### 组件的创建与引用
+
+1.创建组件
+
+```js
+在项目的根目录中，鼠标右键，创建components->test文件夹
+新建的component->test文件夹鼠标右键点击新建component
+新建组件命名后会自动生成对应4个文件，后缀分别是.js、.json、.wxml、.wxss
+```
+
+2.引用组件
+
+```js
+1.找到需要引用组件的目录中.json配置文件，新增usingComponents节点
+2.在usingComponents中通过键值对的形式注册组件，键为注册的组件名称，值为组件的相对引用路径
+3.页面的.wxml中把注册的组件名称以标签形式在页面上使用，即可把组件展现在页面
+注册组件时建议把名称注册为短横线的形式，例如vant-button、custom-button
+```
+
+3.使用样式修饰组件
+
+```js
+组件对应wxss文件的样式，只对组件wxml内节点生效。
+组件和应用组件的页面不能使用id选择器(#id)、属性选择器([a])、标签名选择器，请使用class选择器
+组件和应用组件的页面使用后代选择器(.a.b)一些极端情况下会有非预期的表现
+子元素选择器(.a>.b)只能用于view组件与其子节点，用于其他组件一些极端情况下会有非预期的表现
+继承样式会从组件外继承到组件内，如font、color
+除继承样式外，app.wxss中样式、组件所在页面的样式对自定义组件无效
+```
+
+##### 组件的data与methods
+
+使用data定义组件的私有数据：
+
+```js
+小程序组件中的data和小程序页面中的data用法一致。只不过组件中的data定义在Component()函数中，页面的data定义在Page()函数中；
+在组件的.js文件中：访问data数据使用this.data即可；若要为data中数据重新赋值则调用this.setData({数据名称:新值})
+在组件的.wxml文件中：渲染data中的值则直接使用{{数据名称}}
+```
+
+使用methods定义组件的事件处理函数：
+
+```js
+// 和页面不同，组件的事件处理函数必须定义在methods节点中
+component({methods:{ // 按钮的点击事件处理函数
+btnHandler:function(){}}})
+```
+
+##### 组件的`properties`
+
+`properties`的作用：类似`vue`的`props`，是组件的对外属性，用来接收外界传递到组件的数据。
+
+小程序中，组件的`data`与`properties`类似，都是可读可写，不过`data`倾向存储组件的私有数据，`properties`倾向于存储外界传递到组件的数据。
+
+```js
+Component({properties:{ // 完整定义方式
+  propA:{	// 属性名
+  	type:String	// 属性类型
+  	value:''	// 默认属性值
+  },
+  propB:String	// 简化的定义方式
+}})
+// type值可选Number\String\Boolean\Object\Array\null
+```
+
+如何为组件传递`properties`的值-数据绑定向子组件传递动态数据
+
+```html
+<!--引用组件的页面模板-->
+<view><component-tag-name prop-a="{{dataFieIdA}}" prop-b="{{dataFieIdB}}"></component-tag-name></view>
+<!--可以通过setData修改绑定的数据字段-->
+<!--定义properties采用驼峰写法，在wxml中指定属性时候对应连字符写法，应用数据绑定时采用驼峰写法-->
+```
+
+组件内修改`properties`的值
+
+```js
+小程序中的properties值可读可写，用法与data一致，通过setData修改properties的值得任何属性
+properties:{count:Number},methods:{add:function(){this.setData({count:this.properties.count + 1})}}
+```
+
+##### 数据监听器
+
+监听响应任何 属性 与 数据字段 的变化。类似于`vue`中的`watch`。从小程序2.6.1开始支持。
+
+```js
+Component({observers:{'字段A,字段B':function(字段A的新值,字段B的新值){//这里可以监听多个字段，任一值变化触发function
+  //do something
+}}})
+```
+
+监听子数据字段的变化
+
+```js
+Component({observers:{'zs.age':function(zs.age的新值){//此时使用this.data.zs.age触发;this.data.zs也触发
+},'arr[666]':function(arr666){//此时使用setData设置this.data.arr[666]触发;设置this.data.arr触发
+}}})
+```
+
+```js
+Component({observers:{'zs.field.**':function(field){//使用setData设置this.data.some.field本身或旗下任何字段触发;同时设置this.data.zs也触发
+field === this.data.zs.field}}})
+```
+
+##### 组件的生命周期（CAD）
+
+组件的生命周期指的是组件自身的函数，这一些函数在特定时间点或者在遇见特定的框架被触发。其中最重要的是`created`、`attached`、`detached`，包含一个组件实例生命流程的主要时间点。
+
+- 组件实例刚刚被创建好时，`created`生命周期被触发。此时不能调用`setData`。通常情况这个生命周期只应给组件this添加自定义的属性字段。
+
+
+- 组件完全初始化完毕，进入节点页面树。此时this.setData已被初始化完毕。绝大多数初始化工作在这个时机进行。
+
+
+- 组件离开`detached`节点树时，`detached`生命周期被触发。退出一个页面，如组件还在页面节点树则`detached`被触发。
+
+
+| 生命周期   | 参数         | 描述                                 | 最低版本 |
+| ---------- | ------------ | ------------------------------------ | -------- |
+| `created`  | 无           | 组件创建时执行                       | 1.6.3    |
+| `attached` | 无           | 组件实例进入页面节点树执行           | 1.6.3    |
+| `ready`    | 无           | 组件视图布局完成后执行               | 1.6.3    |
+| `moved`    | 无           | 组件实例被移动到节点树另一个位置执行 | 1.6.3    |
+| `detached` | 无           | 组件实例从页面节点树移除时执行       | 1.6.3    |
+| `error`    | Object Error | 组件方法抛出报错执行                 | 2.4.1    |
+
+定义生命周期函数：1.定义在`Component`构造器第一级参数中 2.**生命周期在`lifetimes`字段内声明(推荐、优先级高)**
+
+```js
+Component({
+  lifetimes: {
+    created() {},
+    attatched() {},
+    detached() {}
+  }
+  // 或者
+  created() {},
+  attatched() {},
+  detached() {}
+})
+```
+
+组件所在页面的生命周期：特殊的生命周期，与组件关联不强，但有时组件需要获知，以便组件内部处理，在`pageLifetimes`定义段中定义。其中可用生命周期包括：
+
+| 生命周期 | 参数          | 描述                     | 版本  |
+| -------- | ------------- | ------------------------ | ----- |
+| `show`   | 无            | 组件所在的页面被展示执行 | 2.2.3 |
+| `hide`   | 无            | 组件所在页面被隐藏执行   | 2.2.3 |
+| `resize` | `Object Size` | 组件所在页面尺寸变化执行 | 2.4.0 |
+
+##### 组件插槽：
+
+- 默认插槽：在组件的`wxml`中可以包含`slot`节点，用于承载组件使用者提供的`wxml`结构。
+
+
+- 默认情况下一个组件`wxml`仅包含一个`slot`。需要使用多个`slot`时在组件的`js`中声明。
+
+
+- 小程序目前仅存默认插槽与多个插槽，暂不支持作用于插槽。
+
+
+```html
+<!--组件模板-->
+<view class="wrapper"><view>这是组件的内部节点</view><slot></slot></view>
+<!----------->
+<!--引用组件的页面模板-->
+<view><component-tag-name>
+  <!--这部分内容放置在组价<slot>的位置上-->
+  <view>这部分是插入到组件slot中的内容</view>
+</component-tag-name></view>
+```
+
+```js
+// 启用多个插槽
+Component({
+  options:{
+    multipleSlots:true //组件定义时选项中启用多slot支持
+          },
+	properties:{},
+	methods:{}})
+```
+
+```html
+<!--组件模板-->
+<view class="wrapper"><slot name="before"></slot><view>这里是组件的内部结构</view><slot name="after"></slot></view>
+```
+
+**多个插槽的使用:**
+
+```html
+<!--引用组件的页面模板-->
+<view>
+  <component-tag-name>
+    <!--这部分内容放置在组件<slot name="before">位置-->
+    <view slot="before">这里是插入组件slot name="before"中的内容</view>
+    <!--这部分内容放置在组件<slot name="after">位置-->
+    <view slot="after">这里是插入组件slot name="after"中的内容</view>
+ 	</component-tag-name>
+</view>
+```
+
+**组件之间的通讯:**
+
+组件之间三种基本通讯方式:
+
+- `WXML`数据绑定：父组件向子组件的指定属性传递数据，仅设置JSON兼容数据（基础库版本2.0.9后可使用函数）
+
+- 事件：子组件向父组件传递数据，传递任意数据
+
+
+以上方法不满足则还可父组件通过`this.selectComponent`方法获取子组件实例对象，此方法可以直接访问组件的任意数据和方法。
+
+通过`this.selectComponent(string)`进行组件通讯:
+
+```html
+<!--wxml-->
+<component-a class="customA" id="cA"></component-a>
+
+<!--父组件的.js文件可以调用 selectComponent 函数并指定 id 或 class 选择器，获取子组件对象-->
+Page({onLoad(){
+	var component = this.selectComponent('.customA');//此处不得为.custom-a;也可传递 id 选择器 #cA
+	console.log(component);
+	console.log(component.data.name); 
+}})
+```
+
+通过事件监听实现子向父传值：
+
+事件系统是组件通讯的重要方式。自定义组件触发任意事件，引用组件页面监听事件。
+
+```js
+1.在父组件的js中定义一个函数，即通过自定义属性的形式传递子组件
+2.父组件的wxml中通过自定义事件将步骤一系列函数引用传递子组件
+3.子组件的js调用this.triggerEvent('自定义事件名',{/*参数对象*/})，将数据发送父组件
+4.父组件的js中可以使用 e.detail 获取子组件传递过来的数据
+getSonCount(e){ // getSonCount 默认为传递子组件的函数
+  console.log(e.detail)
+}
+```
+
+在小程序中自定义组件如何访问data中的数据（B）
+
+A、`this.getdata.数据名` B、`this.data.数据名` C、`this.setdata.数据名` D、`this.数据名`
+
+在小程序组件中 `properties` 声明方式正确的是（D）
+
+A、`Component(properties:{propA:{type:string, value:''}})`
+
+B、`Page(properties:{propA:{type:string, value:''}})`
+
+C、`App(properties:{propA:{type:string, value:''}})`
+
+D、`Components(properties:{propA:{type:string, value:''}})`
+
+在小程序组件中在定义properties下列属性名写法正确的是（D）
+
+A、propertyName
+
+B、propertyname
+
+C、property-name
+
+D、property_name
