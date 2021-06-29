@@ -1,12 +1,16 @@
 {
-  "description": "A WePY project",
+  "miniprogramRoot": "dist/",
+  "description": "项目配置文件",
+  "packOptions": {
+    "ignore": []
+  },
   "setting": {
     "urlCheck": true,
-    "es6": false,
-    "enhance": false,
-    "postcss": false,
+    "es6": true,
+    "enhance": true,
+    "postcss": true,
     "preloadBackgroundData": false,
-    "minified": false,
+    "minified": true,
     "newFeature": false,
     "coverView": true,
     "nodeModules": false,
@@ -27,7 +31,6 @@
       "outputPath": ""
     },
     "enableEngineNative": false,
-    "bundle": false,
     "useIsolateContext": true,
     "useCompilerModule": true,
     "userConfirmedUseCompilerModuleSwitch": false,
@@ -37,8 +40,36 @@
     "minifyWXSS": true
   },
   "compileType": "miniprogram",
+  "libVersion": "2.18.0",
   "appid": "wx09809bdbb04031f3",
-  "projectname": "myproject",
-  "miniprogramRoot": "weapp/",
-  "condition": {}
+  "projectname": "wepyproj",
+  "debugOptions": {
+    "hidedInDevtools": []
+  },
+  "scripts": {},
+  "staticServerOptions": {
+    "baseURL": "",
+    "servePath": ""
+  },
+  "isGameTourist": false,
+  "condition": {
+    "search": {
+      "list": []
+    },
+    "conversation": {
+      "list": []
+    },
+    "game": {
+      "list": []
+    },
+    "plugin": {
+      "list": []
+    },
+    "gamePlugin": {
+      "list": []
+    },
+    "miniprogram": {
+      "list": []
+    }
+  }
 }

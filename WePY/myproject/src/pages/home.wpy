@@ -1,0 +1,39 @@
+<template>
+    <view>HOME PAGE</view>
+    <view>{{msg}}</view>
+    <input value="{{msg}}" @input="inputHandler"/>
+    <view>{{test.a}}</view>
+    <button type="primary" size="mini" @tap="getInfo">GETGETGET</button>
+</template>
+<script>
+import wepy from 'wepy'
+import testWXS from '../wxs/test.wxs'
+// 和 vue 不一样,这里是等号
+// ESlint 默认不需要加分号
+export default class Home extends wepy.page {
+  config = {}
+  data = {
+    msg: 'zairesinatra'
+  }
+  methods = {
+    inputHandler(e) {
+      console.log(e.detail.value)
+      this.msg = e.detail.value
+    },
+    async getInfo() {
+      const res = await wepy.request('https://www.liulongbin:8082/api/get')
+      console.log(res)
+    }
+  }
+  wxs = {
+    test: testWXS
+  }
+}
+</script>
+<style lang="less">
+input {
+    border: 1rpx solid #ccc;
+    margin: 10rpx;
+    padding: 10rpx;
+}
+</style>

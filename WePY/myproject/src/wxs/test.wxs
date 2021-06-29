@@ -1,0 +1,4 @@
+var a = 'zairesinatraxzy'
+module.exports = {
+  a: a
+}
